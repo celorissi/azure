@@ -1,0 +1,34 @@
+# Login no Azure
+az login --use-device-code
+
+#Variaveis
+rg=rg-aks-cli
+local=eastus
+aks=aks-cli
+
+#Criar grupo de recursos
+az group create -n $rg -l $local
+
+#Provisionando aks na forma mais simplificada
+az aks create -g $rg -n $aks
+
+#Listando AKS Cluster
+az aks list -o yaml
+
+# URL do aks
+az aks browse -g $rg -n $aks
+
+#Detalher do AKS
+az aks show -n $aks -g $rg
+
+#Parar o AKS
+az aks stop -n $aks -g $rg
+
+#Iniciar o AKS
+az aks start -n $aks -g $rg
+
+#Deletar o AKS
+az aks delete -n $aks -g $rg
+
+#Deletar o Resource Group
+az group delete -n $rg

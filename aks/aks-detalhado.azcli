@@ -1,0 +1,35 @@
+# Login no Azure
+az login --use-device-code
+
+#Variaveis
+rg=rg-aks-cli
+local=eastus
+aks=aks-cli-detalhado
+sku=Standard_B2s
+
+#Criar grupo de recursos
+az group create -n $rg -l $local
+
+#Provisionando aks na forma detalhada
+az aks create -g $rg -n $aks --enable-aad --disable-local-accounts --node-count 3 --node-vm-size $sku
+
+#Detalher do AKS
+az aks show -n $aks -g $rg -o yaml
+
+#Detalhes do Azure RBAC
+az aks show -g $rg -n $aks --query {AzureRBAC:aadProfile} -o yaml
+
+#Ativar o Azure RBAC
+az aks update -g $rg -n $aks --enable-azure-rbac
+
+#Parar o AKS
+az aks stop -n $aks -g $rg
+
+#Iniciar o AKS
+az aks start -n $aks -g $rg
+
+#Deletar o AKS
+az aks delete -n $aks -g $rg
+
+#Deletar o Resource Group
+az group delete -n $rg
