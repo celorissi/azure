@@ -97,7 +97,7 @@ az aks nodepool add -g $rg --cluster-name $aks -n nodepool2 --mode system --node
 kubectl apply -f pod-nodename.yaml
 kubectl get pods
 kubectl describe pod pod-nodename
-kubectl apply -f pod-nodename-1.yaml
+kubectl apply -f pod-nodename-2.yaml
 kubectl describe pod pod-nodepool1
 
 

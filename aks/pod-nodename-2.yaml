@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pod-nodename
+  name: pod-nodename-2
 spec:
-  nodeName: aks-nodepool2-76496424-vmss000000
+  nodeName: aks-nodepool1-38585003-vmss000000
   containers:
-  - name: pod-nodename
+  - name: pod-nodename-2
     image: nginx
     resources:
       limits:
