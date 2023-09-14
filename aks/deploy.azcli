@@ -23,10 +23,10 @@ kubectl get rs
 # Aplicar Replica Set
 kubectl apply -f replicaset.yaml
 kubectl get pods -l app=app-web --show-labels
-kubectl describe pod app-web-4czgq | grep Replica
+kubectl describe pod app-web-9vdm2 | grep Replica
 
 # Kill Pod
-kubectl delete pod app-web-4czgq
+kubectl delete pod app-web-9vdm2
 kubectl get pods -l app=app-web --show-labels
 
 # Scale UP
