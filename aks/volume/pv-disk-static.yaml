@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-disk-static
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: managed-csi
+  csi:
+    driver: disk.csi.azure.com
+    readOnly: false
+    volumeHandle: /subscriptions/f3a14fbb-d839-4eb6-818d-6e51f2ce1dd2/resourceGroups/MC_rg-storage-disks_aks-disks-static_eastus2/providers/Microsoft.Compute/disks/diskstorageaks
+    volumeAttributes:
+      fsType: ext4

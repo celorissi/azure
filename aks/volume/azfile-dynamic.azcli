@@ -1,0 +1,22 @@
+# Login no Azure
+az login
+
+# Variaveis
+rg=rg-storage-fileshare
+local=eastus2
+aks=aks-storage-file
+sku=Standard_B2s
+
+# Criar Grupo de Recursos
+az group create -n $rg -l $local
+
+# Criar AKS
+az aks create -n $aks -g $rg --node-count 1 --node-vm-size $sku
+
+# Obter Credenciais
+az aks get-credentials -g $rg -n $aks
+
+# Listar todos os Storage Classes
+kubectl get sc --watch
+
+# Criar novo Storage Class
