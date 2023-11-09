@@ -1,5 +1,6 @@
 # Login no Azure
 az login
+az login --use-device-code
 
 # Obter Credenciais 
 az aks get-credentials --resource-group rg-storage --name aks-storage

@@ -1,6 +1,6 @@
 # Login no Azure
 az login
-
+az login --use-device-code
 # Variaveis
 rg=rg-storage-temp
 local=eastus2
