@@ -1,0 +1,44 @@
+#login no AKS
+az login --use-device-code
+
+#Obter credenciais
+az aks get-credentials -g rg-local-rbac -n aks-local-rbac
+
+#Mostrar detalhes do aks
+az aks show -g rg-local-rbac -n aks-local-rbac -o yaml
+
+#Listar aks e o status do aks
+az aks list --query '[].{Nome:name, RBAC:enableRbac}' -o table
+
+#Parametros
+ns=homologacao
+
+#Criar Namespace
+kubectl create namespace $ns
+
+#listar namespaces
+kubectl get namespaces
+
+#Criar servie account - Sys admin
+kubectl apply -f ServiceAccount/sysadmin.yaml
+
+#Listar serviceaccount
+kubectl get serviceaccounts -n $ns
+
+#Detalhes do service account
+kubectl get serviceaccount sysadmin -n $ns -o yaml
+
+#Detalhes do segredo 
+kubectl get secret 
+
+#Criar role para homologacao
+kubectl apply -f Role/role-homologacao.yaml
+
+#mostrar regras
+kubectl get roles -n homologacao
+
+#verificar se o usuario sysadmin tem acesso a pods no namespace homologacao
+kubectl auth can-i list pods --as=system:serviceaccount:$ns:sysadmin -n $ns
+
+#Criar role binding para homologacao
+kubectl apply -f RoleBinding/role-binding-homologacao.yaml
