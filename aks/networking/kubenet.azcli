@@ -1,0 +1,70 @@
+#Login Azure
+az login --use-device-code
+
+#Parametros
+rg=rg-networking
+local=eastus
+sku=Standard_B2s
+aks=aks-network-kubenet
+vnet=vnet-aks
+snet=snet-aks
+app=kubenet-app
+
+#Grupo de recursos
+az group create -n $rg -l $local
+
+#Criar vnet e subnet
+az network vnet create -g $rg -n $vnet \
+    --address-prefix 192.168.0.0/16 \
+    --subnet-name $snet \
+    --subnet-prefix 192.168.1.0/24
+
+#Listar as vnets
+az network vnet list -o table
+
+az network vnet list \
+    -g $rg -o table
+
+#obter id da vnet
+vnetId=$(az network vnet show -g $rg -n $vnet --query id -o tsv)
+
+snetId=$(az network vnet subnet show -g $rg --vnet-name $vnet -n $snet --query id -o tsv)
+
+# Se estiver usando Bash no Windows ######
+export MSYS_NO_PATHCONV=1
+
+#Criar role para aks e vnet
+az ad sp create-for-rbac -n $app
+
+#Criar como variavel o valor de appId e password
+appId=bc6d0ad2-35ee-46a2-803f-68ce9ff02356
+pass=D~X8Q~XenxZORmCLQHcThBd_xGd8_5rZmp7Dwb55
+
+#Listar app registrations
+az ad app list -o table
+
+#Atribuir permissao a vnet como network contributor
+az role assignment create --assignee $appId --scope $vnetId --role "Network Contributor"
+
+# Criar AKS com kubenet
+az aks create -g $rg -n $aks --node-count 1 --node-vm-size $sku \
+    --network-plugin kubenet \
+    --service-cidr 10.0.0.0/16 \
+    --dns-service-ip 10.0.0.10 \
+    --pod-cidr 10.244.0.0/16 \
+    --docker-bridge-address 172.17.0.1/16 \
+    --vnet-subnet-id $snetId \
+    --service-principal $appId \
+    --client-secret $pass
+
+# Verificar o plugin de network do cluster aks
+az aks show -g $rg -n $aks --query {NetworkPlugin:networkProfile.networkPlugin} -o table
+
+
+#limpando
+rg2=MC_rg-networking_aks-network-kubenet_eastus
+rg3=NetworkWatcherRG
+
+#Deletar o Resource Group
+az group delete -n $rg
+az group delete -n $rg3 -y
