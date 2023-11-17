@@ -2,13 +2,13 @@
 az login --use-device-code
 
 #Parametros
-rg=rg-networking
+rg=rg-networking-cni
 local=eastus
 sku=Standard_B2s
-aks=aks-network-kubenet
-vnet=vnet-aks
-snet=snet-aks
-app=kubenet-app
+aks=aks-network-cni
+vnet=vnet-aks-cni
+snet=snet-aks-cni
+app=cni-app
 
 #Grupo de recursos
 az group create -n $rg -l $local
@@ -21,9 +21,6 @@ az network vnet create -g $rg -n $vnet \
 
 #Listar as vnets
 az network vnet list -o table
-
-az network vnet list \
-    -g $rg -o table
 
 #obter id da vnet
 vnetId=$(az network vnet show -g $rg -n $vnet --query id -o tsv)
@@ -38,8 +35,8 @@ export MSYS_NO_PATHCONV=1
 az ad sp create-for-rbac -n $app
 
 #Criar como variavel o valor de appId e password
-appId=bc6d0ad2-35ee-46a2-803f-68ce9ff02356
-pass=D~X8Q~XenxZORmCLQHcThBd_xGd8_5rZmp7Dwb55
+appId=b5f049df-1071-4363-8d92-3fdb18fc416f
+pass=jgb8Q~sq~LaTIqqA~7ad1ZI43LrgTjYjt999cccm
 
 #Listar app registrations
 az ad app list -o table
@@ -49,10 +46,9 @@ az role assignment create --assignee $appId --scope $vnetId --role "Network Cont
 
 # Criar AKS com kubenet
 az aks create -g $rg -n $aks --node-count 1 --node-vm-size $sku \
-    --network-plugin kubenet \
-    --service-cidr 10.0.0.0/16 \
-    --dns-service-ip 10.0.0.10 \
-    --pod-cidr 10.244.0.0/16 \
+    --network-plugin azure \
+    --service-cidr 10.1.0.0/24 \
+    --dns-service-ip 10.1.0.10 \
     --docker-bridge-address 172.17.0.1/16 \
     --vnet-subnet-id $snetId \
     --service-principal $appId \
@@ -63,9 +59,10 @@ az aks show -g $rg -n $aks --query {NetworkPlugin:networkProfile.networkPlugin} 
 
 
 #limpando
-rg2=MC_rg-networking_aks-network-kubenet_eastus
+rg2=MC_rg-networking-cni_aks-network-cni_eastus
 rg3=NetworkWatcherRG
 
 #Deletar o Resource Group
-az group delete -n $rg
+az group delete -n $rg -y
+az group delete -n $rg2 -y
 az group delete -n $rg3 -y
