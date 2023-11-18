@@ -1,0 +1,13 @@
+additionalArguments:
+  - "--acesslog=true"
+  - "--acesslog.format=json"
+  - "--log.level=DEBUG"
+
+deployment:
+  replicas: 1
+
+service:
+  spec:
+    loadBalanceIP: 20.237.7.194
+  annotations:
+    "service.beta.kubernetes.io/azure-load-balancer-resource-group": "rg-traefik"

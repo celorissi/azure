@@ -32,3 +32,13 @@ kubectl apply -f Services/service2.yaml
 
 # Criar Ingress para Service 2
 kubectl apply -f Ingress/service2.yaml
+
+#limpando
+rg=rg-agic
+rg2=MC_rg-agic_aks-agic_eastus
+rg3=NetworkWatcherRG
+
+#Deletar o Resource Group
+az group delete -n $rg -y
+az group delete -n $rg2 -y
+az group delete -n $rg3 -y

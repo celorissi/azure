@@ -1,0 +1,96 @@
+#Login Azure
+az login --use-device-code
+
+#Parametros
+rg=rg-traefik
+local=eastus
+sku=Standard_B2s
+aks=aks-traefik
+vnet=vnet-traefik
+snet=snet-traefik
+ip=ip-traefik
+
+
+#Grupo de recursos
+az group create -n $rg -l $local
+
+#Vnet
+az network vnet create -n $vnet -g $rg -l $local --address-prefix "10.1.0.0/16"
+
+#subnet
+az network vnet subnet create -n $snet -g $rg --vnet-name $vnet --address-prefix "10.1.0.0/22"
+
+#ip publico
+az network public-ip create -g $rg -n $ip --allocation-method Static -l $local --sku standard
+
+# Obter asbnet ID
+az network vnet subnet show -n $vnet --vnet-name $vnet -g $rg --query id -o tsv
+
+#jogar para uma variavel o id da subnet + adicionar a uma variavel
+snetId=$(az network vnet subnet show -n $vnet --vnet-name $vnet -g $rg --query id -o tsv)
+
+# Se estiver usando Bash no Windows ######
+export MSYS_NO_PATHCONV=1
+
+# Criar o cluster aks
+az aks create -n $aks -g $rg -l $local --node-count 1 --node-vm-size $sku --network-plugin azure --vnet-subnet-id $snetId --enable-managed-identity
+
+#Obter principal ID + adicionar a uma variavel
+principalId=$(az aks show -n $aks -g $rg --query identity.principalId -o tsv)
+
+#Obter ID do resource group + adicionar a uma variavel
+rgId=$(az group show -n $rg --query id -o tsv)
+
+#Adicionar permissoes a vnet
+az role assignment create --role "Network Contributor" --assignee $principalId --scope $rgId
+
+# Obter credentials 
+az aks get-credentials -g $rg -n $aks
+
+# adicionar traefik ao nosso repo Helm
+helm repo add traefik https://helm.traefik.io/traefik
+
+#Atualizar os repositorios do helm
+helm repo update
+
+# obter IP public IP
+az network public-ip show -g $rg -n $ip --query ipAddress -o tsv
+# 52.188.145.206
+
+# Instalar Configuração do Traefik
+helm install traefik traefik/traefik -f Config/traefik.yaml
+
+#Aplicar service site 1
+kubectl apply -f Service/site1.yaml
+
+# applicar middleware site 1
+kubectl apply -f Middleware/site1.yaml
+
+# applicar Deployment site 1
+kubectl apply -f Deployment/site1.yaml
+
+# applicar Ingress site 1
+kubectl apply -f Ingress/site1.yaml
+
+#Obter os pods
+kubectl get pods
+
+#Obter services
+kubectl get services
+
+#log do pod traefik
+kubectl logs traefik-69bd598696-xfn5w
+
+#direcionando porta de saida para dashboard
+kubectl port-forward traefik-69bd598696-xfn5w 9000:9000
+
+
+#limpando
+rg=rg-traefik
+rg2=MC_rg-traefik_aks-traefik_eastus
+rg3=NetworkWatcherRG
+
+#Deletar o Resource Group
+az group delete -n $rg -y
+az group delete -n $rg2 -y
+az group delete -n $rg3 -y
