@@ -1,0 +1,18 @@
+#Login Azure
+az login --use-device-code
+
+#Obter Credenciais do AKS
+az aks get-credentials -g rg-aks-private -n aks-private
+
+# verificar pods
+kubectl get pods
+
+#Usando comando invoke para acessar um cluster privado
+az aks command invoke -g rg-aks-private -n aks-private --command "kubectl get pods"
+
+# verificar pods
+kubectl get pods
+
+#Invoke com arquivos
+az aks command invoke -g rg-aks-private -n aks-private --command "kubectl apply -f deployment.yaml" --file AKS-QuickStart-YAML/deployment.yaml
+az aks command invoke -g rg-aks-private -n aks-private --command "kubectl apply -f service.yaml" --file AKS-QuickStart-YAML/service.yaml
