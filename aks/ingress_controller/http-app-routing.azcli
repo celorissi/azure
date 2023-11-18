@@ -1,0 +1,53 @@
+#Login Azure
+az login --use-device-code
+
+#Parametros
+rg=rg-http-app-routing
+local=eastus
+sku=Standard_B2s
+aks=aks-http-app-routing
+
+#Grupo de recursos
+az group create -n $rg -l $local
+
+#Criando aks com http application routing
+az aks create -g $rg -n $aks --node-count 1 --node-vm-size $sku --enable-addons http_application_routing
+
+#Detalhes do Http Application Routing no aks
+az aks show -n $aks -g $rg --query addonProfiles.httpApplicationRouting -o yaml
+
+#Verificar o uso do Http Application Routing no aks
+az aks show -n $aks -g $rg --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o tsv
+
+#URL Obtida
+b6bc59a5a10c4fb1aae5.eastus.aksapp.io
+
+#Obter credenciais
+az aks get-credentials -n $aks -g $rg
+
+# Service
+kubectl apply -f services/http.yaml
+
+# Deployment
+kubectl apply -f deployment/http.yaml
+
+# Ingress
+kubectl apply -f ingress/http.yaml
+
+#Logs
+kubectl get pods -n kube-system
+kubectl logs -f deploy/addon-http-application-routing-external-dns -n kube-system
+
+#Remover HTTP routing
+az aks disable-addons --addons http_application_routing -n $aks -g $rg
+
+
+
+#limpando
+rg2=MC_rg-http-app-routing_aks-http-app-routing_eastus
+rg3=NetworkWatcherRG
+
+#Deletar o Resource Group
+az group delete -n $rg -y
+az group delete -n $rg2 -y
+az group delete -n $rg3 -y

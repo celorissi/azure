@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: site-ingress
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+  labels:
+    name: site
+spec:
+  rules:
+  - host: b6bc59a5a10c4fb1aae5.eastus.aksapp.io
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service: 
+            name: site-service
+            port: 
+              number: 80
