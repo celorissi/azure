@@ -31,7 +31,7 @@ kubectl get ns
 kubectl create ns dev
 kubectl get resourcequota -n dev
 
-kubectl apply -f quota.yaml
+kubectl apply -f quota/quota.yaml
 kubectl apply -f pods/. -n dev
 kubectl get pods -n dev
 kubectl delete -f pods/. -n dev
@@ -43,15 +43,15 @@ kubectl top pods -n kube-system
 
 # Listar Deployments
 kubectl get deploy
-kubectl apply -f deployment.yaml
+kubectl apply -f Deployment/deployment.yaml
 
 # Listar Services
 kubectl get svc
-kubectl apply -f service.yaml
+kubectl apply -f Service/service.yaml
 
 # Horizontal Pod AutoScaller
 kubectl get hpa -w
-kubectl apply -f hpa.yaml
+kubectl apply -f hpa/hpa.yaml
 
 kubectl get pods
 kubectl describe deploy hpa-deployment

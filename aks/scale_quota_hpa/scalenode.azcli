@@ -1,5 +1,5 @@
-# login no Azure
-az login
+#Login Azure
+az login --use-device-code
 
 # Parametros
 rg=rg-scale
@@ -43,5 +43,12 @@ az aks update -g $rg -n $aks --disable-cluster-autoscaler
 az aks show -g $rg -n $aks --query agentPoolProfiles -o yaml
 
 
-# Excluir Grupo de Recursos
+#limpando
+rg=rg-scale
+rg2=MC_rg-scale_aks-scale_eastus2
+rg3=NetworkWatcherRG
+
+#Deletar o Resource Group
 az group delete -n $rg -y
+az group delete -n $rg2 -y
+az group delete -n $rg3 -y
