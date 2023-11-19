@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: limit-namespace-dev
+  namespace: dev
+spec:
+  hard:
+    requests.cpu: "50m"
+    limits.cpu: "100m"
+    pods: "3"
+    

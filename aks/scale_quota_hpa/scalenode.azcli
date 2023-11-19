@@ -1,0 +1,47 @@
+# login no Azure
+az login
+
+# Parametros
+rg=rg-scale
+local=eastus2
+aks=aks-scale
+sku=Standard_B2s
+
+# Criar Grupo de Recursos
+az group create -n $rg -l $local
+
+# Criar AKS com Auto-Scaler habilitado
+az aks create -g $rg -n $aks --node-count 1 --enable-cluster-autoscaler --min-count 1 --max-count 4
+
+# Obter Credenciais
+az aks get-credentials -g $rg -n $aks
+
+# Obter nodes
+kubectl get nodes --no-headers | wc -l
+
+# Adicionar Nodepool com AutoScaler
+az aks nodepool add -n nodepool2 --cluster-name $aks -g $rg --node-vm-size $sku --enable-cluster-autoscaler --min-count 1 --max-count 3
+
+# Listar Nodepools
+az aks nodepool list -g $rg --cluster-name $aks -o table
+
+# Mostrar Detalhes do Nodepool
+az aks nodepool show -n nodepool1 --cluster-name $aks -g $rg --query "{Nome: name, AutoScalling: enableAutoScaling, minCount: minCount, maxCount: maxCount}"
+az aks nodepool show -n nodepool2 --cluster-name $aks -g $rg --query "{Nome: name, AutoScalling: enableAutoScaling, minCount: minCount, maxCount: maxCount}"
+
+# Atualizar Nodepool
+az aks nodepool update -n nodepool1 --cluster-name $aks -g $rg --update-cluster-autoscaler --min-count 1 --max-count 3
+
+# Atualizar AKS Scale
+az aks update -g $rg -n $aks --update-cluster-autoscaler --min-count 2 --max-count 4
+az aks nodepool delete -n nodepool2 --cluster-name $aks -g $rg
+
+# Desativar AKS Auto-Scaler
+az aks update -g $rg -n $aks --disable-cluster-autoscaler
+
+# Detalhes do AKS
+az aks show -g $rg -n $aks --query agentPoolProfiles -o yaml
+
+
+# Excluir Grupo de Recursos
+az group delete -n $rg -y

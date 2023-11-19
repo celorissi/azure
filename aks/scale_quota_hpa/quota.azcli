@@ -1,0 +1,72 @@
+# login no Azure
+az login
+
+# Parametros
+rg=rg-quotas
+local=eastus2
+aks=aks-quota
+sku=Standard_B2s
+
+# Criar Grupo de Recursos
+az group create -n $rg -l $local
+
+# Criar AKS
+az aks create -g $rg -n $aks --node-count 1 --node-vm-size $sku 
+
+# Obter Credenciais
+az aks get-credentials -g $rg -n $aks
+
+# Listar Pods
+kubectl get pods
+
+# Aplicar Pods
+kubectl apply -f pods/.
+kubectl delete -f pods/.
+
+# Descrver Pod
+kubectl describe pod pod-3
+
+# Namespace Resource Quota
+kubectl get ns
+kubectl create ns dev
+kubectl get resourcequota -n dev
+
+kubectl apply -f quota.yaml
+kubectl apply -f pods/. -n dev
+kubectl get pods -n dev
+kubectl delete -f pods/. -n dev
+
+
+# HPA
+# Verificar se Metrics API esta instalado - no aks temos ele instalado por default
+kubectl top pods -n kube-system
+
+# Listar Deployments
+kubectl get deploy
+kubectl apply -f deployment.yaml
+
+# Listar Services
+kubectl get svc
+kubectl apply -f service.yaml
+
+# Horizontal Pod AutoScaller
+kubectl get hpa -w
+kubectl apply -f hpa.yaml
+
+kubectl get pods
+kubectl describe deploy hpa-deployment
+
+# se estiver usando Bash no Windows
+export MSYS_NO_PATHCONV=1
+
+# Rodar Load Generatos
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://hpa-deployment; done"
+
+kubectl get rs
+kubectl get hpa -w
+
+# listar Eventos do Kubernetes
+kubectl get events
+
+# Excluir Grupo de Recursos
+az group delete -n $rg -y
