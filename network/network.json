@@ -1,0 +1,401 @@
+{
+    "additional_properties": {},
+    "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG",
+    "name": "VNET-HUB-BRSOUTH-HLG",
+    "type": "Microsoft.Network/virtualNetworks",
+    "location": "brazilsouth",
+    "tags": {
+        "squad": "coe",
+        "sre": "coe",
+        "jornada": "Infraestrutura",
+        "env": "hlg",
+        "centrodecusto": "2115802418",
+        "centrodecusto_dono": "Junior Rodrigues da Fonseca",
+        "projeto": "network",
+        "created_at": "2023-04-18"
+    },
+    "extended_location": null,
+    "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+    "address_space": {
+        "additional_properties": {},
+        "address_prefixes": [
+            "10.101.44.0/25"
+        ]
+    },
+    "dhcp_options": null,
+    "flow_timeout_in_minutes": null,
+    "subnets": [
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/subnets/AzureFirewallSubnet",
+            "name": "AzureFirewallSubnet",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "address_prefix": "10.101.44.0/26",
+            "address_prefixes": null,
+            "network_security_group": null,
+            "route_table": null,
+            "nat_gateway": null,
+            "service_endpoints": null,
+            "service_endpoint_policies": null,
+            "private_endpoints": null,
+            "ip_configurations": [
+                {
+                    "additional_properties": {},
+                    "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/azureFirewalls/AFW-VIA-BRSOUTH-HLG/azureFirewallIpConfigurations/PIP-AFW-01-HLG",
+                    "name": null,
+                    "etag": null,
+                    "private_ip_address": null,
+                    "private_ip_allocation_method": null,
+                    "subnet": null,
+                    "public_ip_address": null,
+                    "provisioning_state": null
+                }
+            ],
+            "ip_configuration_profiles": null,
+            "ip_allocations": null,
+            "resource_navigation_links": null,
+            "service_association_links": null,
+            "delegations": [],
+            "purpose": null,
+            "provisioning_state": "Succeeded",
+            "private_endpoint_network_policies": "Disabled",
+            "private_link_service_network_policies": "Enabled",
+            "application_gateway_ip_configurations": null
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/subnets/GatewaySubnet",
+            "name": "GatewaySubnet",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "address_prefix": "10.101.44.64/27",
+            "address_prefixes": null,
+            "network_security_group": null,
+            "route_table": null,
+            "nat_gateway": null,
+            "service_endpoints": null,
+            "service_endpoint_policies": null,
+            "private_endpoints": null,
+            "ip_configurations": null,
+            "ip_configuration_profiles": null,
+            "ip_allocations": null,
+            "resource_navigation_links": null,
+            "service_association_links": null,
+            "delegations": [],
+            "purpose": null,
+            "provisioning_state": "Succeeded",
+            "private_endpoint_network_policies": "Disabled",
+            "private_link_service_network_policies": "Enabled",
+            "application_gateway_ip_configurations": null
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/subnets/snet-network-hlg",
+            "name": "snet-network-hlg",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "address_prefix": "10.101.44.96/27",
+            "address_prefixes": null,
+            "network_security_group": null,
+            "route_table": null,
+            "nat_gateway": null,
+            "service_endpoints": null,
+            "service_endpoint_policies": null,
+            "private_endpoints": null,
+            "ip_configurations": null,
+            "ip_configuration_profiles": null,
+            "ip_allocations": null,
+            "resource_navigation_links": null,
+            "service_association_links": null,
+            "delegations": [],
+            "purpose": null,
+            "provisioning_state": "Succeeded",
+            "private_endpoint_network_policies": "Disabled",
+            "private_link_service_network_policies": "Enabled",
+            "application_gateway_ip_configurations": null
+        }
+    ],
+    "virtual_network_peerings": [
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hubhlg-to-pocbr",
+            "name": "peer-hubhlg-to-pocbr",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/4e615685-54b9-4d3c-9434-955cee3a5fd0/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworks/AZ_POC-BR"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.0.0/22"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.0.0/22"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "dab0490e-9993-05ee-0131-98598c467d1c"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hubhlg-to-poceastus",
+            "name": "peer-hubhlg-to-poceastus",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/4e615685-54b9-4d3c-9434-955cee3a5fd0/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworks/AZ_POC-EASTUS2"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.4.0/22"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.4.0/22"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "21f7a6cc-ccd1-0de5-0bd6-60cd8f691798"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hubhlg-to-backofficehlg",
+            "name": "peer-hubhlg-to-backofficehlg",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/be2ab514-98fa-41a5-9a21-3d4928ee6112/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworks/BACKOFFICE-HLG-AKS"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.107.48.0/20"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.107.48.0/20"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "4fc02b0a-0d61-0ea8-1098-17fe23d0e660"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peering-vnet-az-vvonline",
+            "name": "peering-vnet-az-vvonline",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": true,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/055299c1-9e0a-4d2d-afe7-2b1c6af40aac/resourceGroups/NETWORK_VVONLINE/providers/Microsoft.Network/virtualNetworks/AZ_VVONLINE"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.103.0.0/18"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.103.0.0/18"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "93b0bdc6-f146-0564-3547-9e488307534e"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hlgonline-to-hubhlg",
+            "name": "peer-hlgonline-to-hubhlg",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/b5fe7cea-c22d-4ac6-a22b-7c740dbbe4e5/resourceGroups/NETWORK/providers/Microsoft.Network/virtualNetworks/AZ_HLG-ONLINE"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.104.0.0/18"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.104.0.0/18"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "d6a4126a-3ddc-0573-35bf-62a422cf05aa"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hubhlg-to-aksdatascienceus",
+            "name": "peer-hubhlg-to-aksdatascienceus",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/e4128695-83c0-493e-89db-2095acf2d7c6/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworks/AKS_DATASCIENCE_US"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.8.0/22"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.8.0/22"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "b94be4c0-93e0-02cf-312c-2b588fec08f2"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hubhlg-to-azdevhlgbigdata",
+            "name": "peer-hubhlg-to-azdevhlgbigdata",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/cd7830ba-234d-4033-9d38-22306144b136/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworks/AZ_DEVHLG_BIGDATA"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.48.0/20"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.109.48.0/20"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "4dc7e975-37be-0e4a-08c0-9bc7eaa6d7de"
+        },
+        {
+            "additional_properties": {},
+            "id": "/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/virtualNetworkPeerings/peer-hubhlg-to-cdlojashlgaks",
+            "name": "peer-hubhlg-to-cdlojashlgaks",
+            "etag": "W/\"e3884657-2138-490f-a501-7dffebf4a29e\"",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "allow_virtual_network_access": true,
+            "allow_forwarded_traffic": true,
+            "allow_gateway_transit": false,
+            "use_remote_gateways": false,
+            "remote_virtual_network": {
+                "additional_properties": {},
+                "id": "/subscriptions/39e1dbac-ba4e-4491-9b26-d6acff50a752/resourceGroups/rg-network/providers/Microsoft.Network/virtualNetworks/CD_LOJAS-HLG-AKS"
+            },
+            "remote_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.101.20.0/22"
+                ]
+            },
+            "remote_virtual_network_address_space": {
+                "additional_properties": {},
+                "address_prefixes": [
+                    "10.101.20.0/22"
+                ]
+            },
+            "remote_bgp_communities": null,
+            "remote_virtual_network_encryption": null,
+            "peering_state": "Connected",
+            "peering_sync_level": "FullyInSync",
+            "provisioning_state": "Succeeded",
+            "do_not_verify_remote_gateways": false,
+            "resource_guid": "a71e2b63-71cd-0cad-1ee8-e86acf629a98"
+        }
+    ],
+    "resource_guid": "8109d20a-8fbf-493b-acfe-b023836c6647",
+    "provisioning_state": "Succeeded",
+    "enable_ddos_protection": false,
+    "enable_vm_protection": null,
+    "ddos_protection_plan": null,
+    "bgp_communities": null,
+    "encryption": null,
+    "ip_allocations": null
+}

@@ -1,0 +1,101 @@
+#Login Azure
+az login --use-device-code
+
+================================================================
+
+#Variaveis
+fw=AFW-VIA-BRSOUTH-HLG
+ids=/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/subnets/AzureFirewallSubnet
+rg=rg-network-hlg
+cn=rule-deny-resource-all
+rule=rule-any-all
+sub=CONNECTIVITY
+
+================================================================
+
+#Verificar todas as accounts
+az account list --output table
+
+#Verificar em qual subscrition esta
+az account show
+az account show --output table
+az account list --query "[?isDefault]" --output table
+
+#Selecionar a subscription
+az account set --subscription "CONNECTIVITY"
+
+================================================================
+
+#Comandos
+
+az network firewall list -o table
+
+az network firewall network-rule list --resource-group "rg-network-hlg" --firewall-name "AFW-VIA-BRSOUTH-HLG" --collection-name "Network rule collection"
+
+================================================================
+
+az network firewall ip-config list --firewall-name "AFW-VIA-BRSOUTH-HLG" --resource-group "rg-network-hlg"
+
+az network firewall nat-rule collection list -f "AFW-VIA-BRSOUTH-HLG" -g "rg-network-hlg"
+az network firewall network-rule collection list -f "AFW-VIA-BRSOUTH-HLG" -g "rg-network-hlg"
+az network firewall application-rule collection list -f "AFW-VIA-BRSOUTH-HLG" -g "rg-network-hlg"
+
+az network firewall network-rule show --collection-name "rule-deny-resource-all" --firewall-name "AFW-VIA-BRSOUTH-HLG" -n "rule-any-all" -g "rg-network-hlg" --subscription "CONNECTIVITY"
+
+az network firewall policy rule-collection-group collection list --policy-name "AFW-POL-01-HLG" --rcg-name "rule-any-to-any-network-hlg" --resource-group "rg-network-hlg" 
+
+
+az network firewall network-rule list -f "AFW-VIA-BRSOUTH-HLG" -g "rg-network-hlg" --collection-name "rule-deny-resource-all" 
+
+az network firewall network-rule list --firewall-name AFW-VIA-BRSOUTH-HLG --resource-group rg-network-hlg --collection-name rule-deny-resource-all --subscription 660c1efb-a648-4344-9a03-242ed79e6af5
+
+================================================================
+
+#Comandos funcionais
+
+az network firewall policy rule-collection-group list --policy-name pol-fw-01 -g Test-FW-RG -o yamlc
+
+
+================================================================
+#Criar rules
+
+az network firewall policy rule-collection-group collection rule add \
+--policy-name pol-fw-01 \
+--resource-group Test-FW-RG \
+--rule-collection-group-name   \
+--collection-name collection1 \
+--name snet-akspriv-vmaischeckout-hlg_to_snet-mongodb-hlg \
+--rule-type NetworkRule \
+--destination-addresses 10.101.19.128/25 \
+--destination-ports 27017 \
+--ip-protocols TCP \
+--source-addresses 10.101.20.96/27 
+
+
+az network firewall policy rule-collection-group collection list --policy-name pol-fw-01 --rcg-name grp-collection --resource-group Test-FW-RG --output table
+
+az network firewall policy rule-collection-group collection add-filter-collection -g Test-FW-RG --policy-name pol-fw-01 --rule-collection-group-name grp-collection --name filter_collection --action Allow --rule-name network_rule --rule-type NetworkRule --description "test" --destination-addresses "202.120.36.15" --source-addresses "202.120.36.13" "202.120.36.14" --destination-ports 12003 12004 --ip-protocols TCP UDP --collection-priority 110
+
+az network firewall policy rule-collection-group collection add-filter-collection \
+-g Test-FW-RG \
+--policy-name pol-fw-01 \
+--rule-collection-group-name grp-collection \
+--name filter_collection \
+--action Allow \
+--rule-name network_rule \
+--rule-type NetworkRule \
+--description "test" \
+--destination-addresses "202.120.36.15" \
+--source-addresses "202.120.36.13" "202.120.36.14" \
+--destination-ports 12003 12004 \
+--ip-protocols TCP UDP \
+--collection-priority 110
+
+
+az network firewall policy rule-collection-group collection rule add --collection-name filter_collection --name networkrule22  --policy-name pol-fw-01 --rcg-name grp-collection --resource-group Test-FW-RG --rule-type NetworkRule --description "test" --destination-addresses "202.120.36.14" --source-addresses "202.120.36.13" "202.120.36.14" --destination-ports 12003 12004 --ip-protocols TCP UDP
+
+
+
+az network firewall policy rule-collection-group collection add-filter-collection -g Test-FW-RG --policy-name pol-fw-01 --rule-collection-group-name grp-collection --name filter_collection01 --action Allow --rule-name network_rule02 --rule-type NetworkRule --description "test" --destination-addresses "10.101.19.129" --source-addresses "10.107.54.129" --destination-ports 9093 --ip-protocols tcp --collection-priority 110
+
+az network firewall policy rule-collection-group collection add-filter-collection -g rg-network-hlg --policy-name AFW-POL-01-HLG --name DEV/HLG - BACKOFFICE --action Allow --rule-name snet-akspriv-figitalplatses-hlg_to_snet-mongodb-hlg --rule-type NetworkRule --destination-addresses 10.101.19.128/25 --source-addresses 10.107.54.128/26 --destination-ports 9093 --ip-protocols tcp --collection-priority 110
