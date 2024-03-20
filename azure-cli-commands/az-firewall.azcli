@@ -1,30 +1,4 @@
-#Login Azure
-az login --use-device-code
 
-================================================================
-
-#Variaveis
-fw=AFW-VIA-BRSOUTH-HLG
-ids=/subscriptions/660c1efb-a648-4344-9a03-242ed79e6af5/resourceGroups/rg-network-hlg/providers/Microsoft.Network/virtualNetworks/VNET-HUB-BRSOUTH-HLG/subnets/AzureFirewallSubnet
-rg=rg-network-hlg
-cn=rule-deny-resource-all
-rule=rule-any-all
-sub=CONNECTIVITY
-
-================================================================
-
-#Verificar todas as accounts
-az account list --output table
-
-#Verificar em qual subscrition esta
-az account show
-az account show --output table
-az account list --query "[?isDefault]" --output table
-
-#Selecionar a subscription
-az account set --subscription "CONNECTIVITY"
-
-================================================================
 
 #Comandos
 
@@ -99,3 +73,19 @@ az network firewall policy rule-collection-group collection rule add --collectio
 az network firewall policy rule-collection-group collection add-filter-collection -g Test-FW-RG --policy-name pol-fw-01 --rule-collection-group-name grp-collection --name filter_collection01 --action Allow --rule-name network_rule02 --rule-type NetworkRule --description "test" --destination-addresses "10.101.19.129" --source-addresses "10.107.54.129" --destination-ports 9093 --ip-protocols tcp --collection-priority 110
 
 az network firewall policy rule-collection-group collection add-filter-collection -g rg-network-hlg --policy-name AFW-POL-01-HLG --name DEV/HLG - BACKOFFICE --action Allow --rule-name snet-akspriv-figitalplatses-hlg_to_snet-mongodb-hlg --rule-type NetworkRule --destination-addresses 10.101.19.128/25 --source-addresses 10.107.54.128/26 --destination-ports 9093 --ip-protocols tcp --collection-priority 110
+
+#VERIFICAR POLICY CRIADA
+az network firewall policy list -g  Test-FW-RG --out table
+
+#VERIFICAR GRUPOS DE RULE COLLECTION CRIADOS
+az network firewall policy rule-collection-group list --policy-name pol-fw-01 -g Test-FW-RG -o table
+
+#CREATE RULE COLLECTION GROUP
+az network firewall policy rule-collection-group create --name NETWORK --policy-name pol-fw-01 --priority 100 --resource-group Test-FW-RG
+
+#CRIAR FILTRO DENTRO DO GRUPO
+az network firewall policy rule-collection-group collection add-filter-collection -g Test-FW-RG --policy-name pol-fw-01 --rule-collection-group-name NETWORK --name rule1 --action Allow --rule-name network_rule --rule-type NetworkRule --description "test" --destination-addresses "202.120.36.15" --source-addresses "202.120.36.13" "202.120.36.14" --destination-ports 12003 12004 --ip-protocols TCP UDP --collection-priority 11002
+
+az network firewall policy rule-collection-group collection add-filter-collection -g Test-FW-RG --policy-name pol-fw-01 --rule-collection-group-name NETWORK --name rule2 --action Allow --rule-name network_rule --rule-type NetworkRule --description "test" --destination-addresses "10.101.20.96/27 " --source-addresses "10.101.19.128/25" --destination-ports 21017 --ip-protocols TCP --collection-priority 100
+
+

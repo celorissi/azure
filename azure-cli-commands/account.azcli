@@ -1,0 +1,14 @@
+#Login Azure
+az login --use-device-code
+
+================================================================
+#Verificar todas as accounts
+az account list --output table
+
+#Verificar em qual subscrition esta
+az account show
+az account show --output table
+az account list --query "[?isDefault]" --output table
+
+#Selecionar a subscription
+az account set --subscription "CONNECTIVITY"

@@ -1,0 +1,15 @@
+
+https://learn.microsoft.com/pt-br/cli/azure/network/route-table?view=azure-cli-latest
+
+
+#List all route tables in a subscription
+az network route-table list --resource-group NETWORK_VVONLINE --subscription 055299c1-9e0a-4d2d-afe7-2b1c6af40aac
+
+#Get the details of a route table
+az network route-table show --resource-group NETWORK_VVONLINE --name route-shared-return --subscription 055299c1-9e0a-4d2d-afe7-2b1c6af40aac
+
+#List routes in a route table.
+az network route-table route list --resource-group NETWORK_VVONLINE --route-table-name route-shared-return --subscription 055299c1-9e0a-4d2d-afe7-2b1c6af40aac
+
+#Delete a route table.
+#az network route-table delete --resource-group NETWORK_VVONLINE --name route-shared-return --subscription 055299c1-9e0a-4d2d-afe7-2b1c6af40aac
